@@ -28,11 +28,16 @@ const producto6 = new Producto(6, "Vino", "Trumpeter", 11000)
 const carrito = [producto1, producto2, producto3, producto4, producto5, producto6]
 
 //Storage
-let gondola = []
-if(localStorage.getItem("gondola")){
-    gondola = JSON.parse(localStorage.getItem("gondola"))
-}else{
-    console.log("Seteando stock de productos")
-    gondola.push(producto1,producto2,producto3,producto4,producto5,producto6)
-    localStorage.setItem("gondola", JSON.stringify(gondola))
-}
+
+//let gondola = []
+//if(localStorage.getItem("gondola")){
+//     gondola = JSON.parse(localStorage.getItem("gondola"))
+// }else{
+//     console.log("Seteando stock de productos")
+//     gondola.push(producto1,producto2,producto3,producto4,producto5,producto6)
+//     localStorage.setItem("gondola", JSON.stringify(gondola))
+// }
+
+let gondola = JSON.parse(localStorage.getItem('gondola')) ?? [...carrito]
+
+localStorage.setItem('gondola', JSON.stringify(gondola))

@@ -34,12 +34,14 @@ function mostrarCatalogo(array){
 }
 
 //array de productosComprados
-let productosEnCarrito 
-if(localStorage.getItem("carrito")){
-    productosEnCarrito = JSON.parse(localStorage.getItem("carrito"))
-}else{
-    productosEnCarrito = []
-}
+// let productosEnCarrito 
+// if(localStorage.getItem("carrito")){
+//     productosEnCarrito = JSON.parse(localStorage.getItem("carrito"))
+// }else{
+//     productosEnCarrito = []
+// }
+
+let productosEnCarrito = JSON.parse(localStorage.getItem('carrito')) || []
 
 function agregarAlCarrito(producto){
     console.log(`El producto ${producto.bebida} de ${producto.marca} ha sido agregado. Vale ${producto.precio}`)
