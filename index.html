@@ -7,12 +7,14 @@
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/styles.css">
+
+    
     <title>Bebidas KINGs</title>
 </head>
     <!--Menu-->  
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg" style="background-color: #4b0082;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Bebidas KINGs</a>
+          <a class="navbar-brand" href="#" id="tituloPrincipal">Bebidas KINGs</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon "></span>
           </button>
@@ -21,21 +23,23 @@
             <ul class="navbar-nav me-auto">
               <form class="d-flex">
                 <input id="buscador"class="form-control me-2" placeholder="Busqueda por marca o bebida" aria-label="Search">
-                <button id="btnBuscar" class="btn btn-outline-success">Buscar</button>
+                <button id="btnBuscar" class="btn btn-outline-light">Buscar</button>
               </form> 
-              
+              <button id="verCatalogo" class="btn btn-outline-light">Ver Catálogo</button>
+              <button id="ocultarCatalogo" class="btn btn-outline-light">Ocultar Catálogo</button>
+              <button id="agregarProducto" data-bs-toggle="modal" data-bs-target="#idModalAgregarProducto" class="btn btn-outline-light">Agregar producto</button>
             </ul>
             <ul>
               <select id="selectOrden" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                <option selected>Ordenar por:</option>
-                <option value="1">Mayor a menor precio</option>
-                <option value="2">Menor a mayor precio</option>
-                <option value="3">Alfabeticamente</option>
+                <option id="ordenarPor" selected>Ordenar por:</option>
+                <option value="1" class="selectItem">Mayor a menor precio</option>
+                <option value="2" class="selectItem">Menor a mayor precio</option>
+                <option value="3" class="selectItem">Alfabeticamente</option>
               </select>
             </ul>
             <ul style="list-style: none;"className="navbar-nav me-auto">  
               <li className="nav-item " >
-                  <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#idModalCarrito" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
+                  <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#idModalCarrito" class="btn btn-dark"><i class="fas fa-shopping-cart fa-1x"></i></a>
               </li>
           </ul>
            
@@ -46,43 +50,14 @@
         </div> 
       </nav>
 
-      <div class="container m-4">
-        <div class="row">
-            <div class="col-3">
-                
-                <button id="botonDarkMode" class="btn btn-dark">Dark</button>
-  
-            </div>
-            <div class="col-3">
-                
-                <button id="botonLightMode" class="btn btn-light">Light</button>
-  
-            </div>
-            <div class="col-3">
-                
-                
-              <button id="agregarProducto" data-bs-toggle="modal" data-bs-target="#idModalAgregarProducto" class="btn btn-success">Agregar producto</button>
-  
-            </div>
-        </div>
-  
-    </div>
-
-    
-    
-    <div class="container m-3">
-      <div class="row">
-        <div class="col-4">
-
-          <button id="verCatalogo" class="btn btn-success">Ver Catálogo</button>
-        </div>
-        <div class="col-4">
-          <button id="ocultarCatalogo" class="btn btn-success">Ocultar Catálogo</button>
-          
-        </div>
+      <div  id="containerModo">
+        
+          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-dark btn-sm" id="botonDarkMode">Modo oscuro</button>
+            <button type="button" class="btn btn-light btn-sm" id="botonLightMode">Modo claro</button>
+          </div>
       </div>
-    </div>
-    
+   
     <div class="container">
       <div id="coincidencia"></div>
       <div id="productos" class="row"></div>
@@ -102,17 +77,22 @@
             <form>
               <div class="mb-3">
                 <label for="bebida" class="form-label">Bebida</label>
-                <input type="text" class="form-control" id="bebidaInput" aria-describedby="bebida">
+                <input type="text" required class="form-control" id="bebidaInput" aria-describedby="bebida"/>
                 
               </div>
               <div class="mb-3">
                 <label for="marca" class="form-label">Marca</label>
-                <input type="text" class="form-control" id="marcaInput" aria-describedby="marca">
+                <input type="text"  required class="form-control" id="marcaInput" aria-describedby="marca"/>
                 
               </div>
               <div class="mb-3">
                 <label for="precio" class="form-label">Precio:</label>
-                <input type="text" class="form-control" id="precioInput" aria-describedby="precio">
+                <input type="number" required class="form-control" id="precioInput" aria-describedby="precio"/>
+                
+              </div>
+              <div class="mb-3">
+                <label for="imagen" class="form-label">Link de imagen:</label>
+                <input type="url"  required class="form-control" id="imagenInput" aria-describedby="imagen"/>
                 
               </div>
             </form>
@@ -120,7 +100,7 @@
           
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="text" id="guardarProductoBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar Producto</button>
+            <button type="text" id="guardarProductoBtn" class="btn btn-dark" data-bs-dismiss="modal">Guardar Producto</button>
           </div>
         </div>
       </div>
@@ -134,21 +114,39 @@
             <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
+
           <div class="modal-body" id="modal-bodyCarrito">
             
           </div>
           <div class="row ml-ato">
-            <p id="precioTotal"></p>
+
+
+            <p id="precioTotal">Precio total:  <span class="badge bg-success">$0</span></p>
           </div>
           <div class="modal-footer">
             
             
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
+            <button type="button" data-bs-dismiss="modal" class="btn btn-danger" id="botonVaciar">Vaciar Carrito</button>
           </div>
         </div>
       </div>
     </div>
+
+<!--Foto inicio-->
+
+  <div id="fotoInicio">
+    <img src="./imagenes/fotoPrincipal.jpg" alt="Bebidas KINGs">
+  </div>
+
+<!--Footer-->
+
+<footer class="footer">
+Todos los derechos reservados - 2023 ©
+</footer>
+
 <!--Script de Bootstrap-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -157,5 +155,12 @@
 <script src="JS/class.js"></script>
 <script src="JS/main.js"></script>
 <script src="JS/darkMode.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--SweetAlert-->
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<!--Toastify-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </body>
 </html>

@@ -14,15 +14,15 @@
 .darkMode .modal{
     color: black;
 }
-/* Card */
+/*Card*/
  .card{
     width: 90%;
     max-width: 350px;
     margin: 1rem auto;
-    border: 1px solid black;
+    border: 1px solid pink;
     border-radius: 10%;
     text-align: center;
-    background-color: white;
+    background-color: lightblue;
     max-height: 700px;
 }
 .card h3{
@@ -35,7 +35,7 @@
 
 }
 .card img{
-    border: 1px solid black;
+    border: 1px solid pink;
     border-radius: 2%;
     min-width: 250px;
     width: 100%;
@@ -46,15 +46,68 @@
     font-size: 1rem;
 
 }
-.content a{
-    padding: 0.5rem;
-    text-decoration: none;
-    color: gray;
-    border: 1px black solid;
-    border-radius: 20%;
-    color: white;
-    background-color: black;
 
-    font-size: 1.25rem;
+/*Botones NavBar*/
+#selectOrden {
+    color: gray;
+}
+
+.selectItem {
+    color: black;
+}
+
+#tituloPrincipal{
+    color: pink;
+}
+
+#verCatalogo{
+    color: pink;
+}
+
+#btnBuscar{
+    color: pink;
+}
+#ocultarCatalogo{
+    color: pink;
+    display: none;
+}
+
+#agregarProducto{
+    color: pink;
+}
+
+#precioTotal{
+    display: flex;
+    justify-content: center;
+    color: indigo;
 
 }
+
+#containerModo{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+/*Foto principal*/
+
+#fotoInicio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#fotoInicio img{
+    height: 80vh;
+}
+
+/*Footer*/
+.footer{
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    text-align: center;
+}
+
