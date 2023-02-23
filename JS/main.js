@@ -23,11 +23,11 @@ function mostrarCatalogo(array){
                             <p>Marca: ${producto.marca}</p>
                             <img src="./imagenes/imagen${producto.id}.jpg"/>
                             <p class="">Precio: ${producto.precio}</p>
-                        <button id="agregarBtn${producto.id}" class="btn btn-outline-success">Agregar al carrito</button>
-                    <div class='botonesMasMenos'>  
-                        <button id="menos">-</button>
-                        <span id="contador">0</span>
-                        <button id="mas">+</button>
+                        <button id="agregarBtn${producto.id}" class="btn btn-outline-success" onclick="agregarAlCarrito()">Agregar al carrito</button>
+                <div class='botonesMasMenos'>  
+                        <button id="menos${producto.id}">-</button>
+                        <span id="contador${producto.id}">${producto.cantidad}</span>
+                        <button id="mas${producto.id}">+</button>
                 </div>
                 </div>
         </div>`
@@ -35,25 +35,38 @@ function mostrarCatalogo(array){
         let btnAgregar = document.getElementById(`agregarBtn${producto.id}`)
         btnAgregar.addEventListener("click", ()=>{
             agregarProducto(producto)
-    
+            btnAgregar.style.display = 'none'
+            document.getElementById(`contador${producto.id}`).innerHTML = producto.cantidad
         })
+        
+        let btnMas = document.getElementById(`mas${producto.id}`)
+        btnMas.addEventListener("click", ()=>{
+            producto.cantidad += 1
+            producto.subtotal = producto.subtotal + producto.precio
+            let plantilla = document.getElementById(`productoCarrito${producto.id}`)
+            plantilla.innerHTML = `${producto.cantidad} - ${producto.bebida} - ${producto.marca}: -------------------  $${producto.subtotal} <button id="quitarBtn" onclick="quitarDelCarrito(${producto.id})" class="btn btn-danger btn-sm">Quitar</button>`
+            actualizarPrecioTotal(productosEnCarrito)
+            document.getElementById(`contador${producto.id}`).innerHTML = producto.cantidad
+        })
+        
     }
 }
-
 
 
 let productosEnCarrito = JSON.parse(localStorage.getItem('carrito')) || []
 
 function agregarProducto(producto){
-    console.log(`El producto ${producto.bebida} de ${producto.marca} ha sido agregado. Vale ${producto.precio}`)
+    producto.cantidad = 1
+    producto.subtotal = producto.precio
     productosEnCarrito.push(producto)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
     const carrito = document.getElementById('modal-bodyCarrito')
     let plantilla = document.createElement('div')
-    plantilla.innerHTML = `<li id="productoCarrito${producto.id}">${producto.bebida} - ${producto.marca}: ------------------------ $${producto.precio} <button id="quitarBtn" onclick="quitarDelCarrito(${producto.id})" class="btn btn-danger btn-sm">Quitar</button></li>
+    plantilla.innerHTML = `<li id="productoCarrito${producto.id}"> ${producto.cantidad} - ${producto.bebida} - ${producto.marca}: -------------------  $${producto.subtotal} <button id="quitarBtn" onclick="quitarDelCarrito(${producto.id})" class="btn btn-danger btn-sm">Quitar</button></li>
                 `
     carrito.appendChild(plantilla)
     actualizarPrecioTotal(productosEnCarrito)
+
 }
 
 const quitarDelCarrito = (id) => {
@@ -76,7 +89,7 @@ const quitarDelCarrito = (id) => {
 const actualizarPrecioTotal = (productosEnCarrito) => {
     let precioTotal = 0
     for (let producto of productosEnCarrito) {
-        precioTotal += Number(producto.precio)
+        precioTotal += Number(producto.subtotal)
     }
     let element = document.getElementById('precioTotal')
     element.innerHTML = `Precio total:  <span class="badge bg-success">$${precioTotal}</span>`
