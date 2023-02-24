@@ -1,5 +1,4 @@
-//DarkMode:
-
+//DarkMode
 const botonDarkMode = document.getElementById("botonDarkMode");
 const botonLightMode = document.getElementById("botonLightMode");
 const eliminarModeBtn = document.getElementById("eliminarMode");

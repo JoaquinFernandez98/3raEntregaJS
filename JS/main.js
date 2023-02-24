@@ -11,6 +11,7 @@ const quitarBtn = document.getElementById("quitarBtn")
 const finalizarCompra = document.getElementById("botonFinalizarCompra")
 
 
+
 function mostrarCatalogo(array){
     productos.innerHTML = ""
     for(let producto of array){
@@ -22,27 +23,41 @@ function mostrarCatalogo(array){
                             <h4 class="card-title">${producto.bebida}</h4>
                             <p>Marca: ${producto.marca}</p>
                             <img src="./imagenes/imagen${producto.id}.jpg"/>
-                            <p class="">Precio: ${producto.precio}</p>
-                        <button id="agregarBtn${producto.id}" class="btn btn-outline-success" onclick="agregarAlCarrito()">Agregar al carrito</button>
-                <div class='botonesMasMenos'>  
+                            <p class="">Precio: $${producto.precio}</p>
+                        <button id="agregarBtn${producto.id}" class="btn btn-outline-success" >Agregar al carrito</button>
+                <div class='botonesMasMenos' id='btnMasMenos${producto.id}' style='display:none'>  
                         <button id="menos${producto.id}">-</button>
                         <span id="contador${producto.id}">${producto.cantidad}</span>
                         <button id="mas${producto.id}">+</button>
                 </div>
                 </div>
         </div>`
+
+        //Agregar al carrito
         productos.appendChild(nuevoProducto)
         let btnAgregar = document.getElementById(`agregarBtn${producto.id}`)
         btnAgregar.addEventListener("click", ()=>{
-            agregarProducto(producto)
+            agregarAlCarrito(producto)
             btnAgregar.style.display = 'none'
             document.getElementById(`contador${producto.id}`).innerHTML = producto.cantidad
+            document.getElementById(`btnMasMenos${producto.id}`).style.display = 'inline'
         })
-        
+        //boton mas
         let btnMas = document.getElementById(`mas${producto.id}`)
         btnMas.addEventListener("click", ()=>{
             producto.cantidad += 1
             producto.subtotal = producto.subtotal + producto.precio
+            let plantilla = document.getElementById(`productoCarrito${producto.id}`)
+            plantilla.innerHTML = `${producto.cantidad} - ${producto.bebida} - ${producto.marca}: -------------------  $${producto.subtotal} <button id="quitarBtn" onclick="quitarDelCarrito(${producto.id})" class="btn btn-danger btn-sm">Quitar</button>`
+            actualizarPrecioTotal(productosEnCarrito)
+            document.getElementById(`contador${producto.id}`).innerHTML = producto.cantidad
+        })
+
+        //boton menos
+        let btnMenos = document.getElementById(`menos${producto.id}`)
+        btnMenos.addEventListener("click", ()=>{
+            producto.cantidad -= 1
+            producto.subtotal = producto.subtotal - producto.precio
             let plantilla = document.getElementById(`productoCarrito${producto.id}`)
             plantilla.innerHTML = `${producto.cantidad} - ${producto.bebida} - ${producto.marca}: -------------------  $${producto.subtotal} <button id="quitarBtn" onclick="quitarDelCarrito(${producto.id})" class="btn btn-danger btn-sm">Quitar</button>`
             actualizarPrecioTotal(productosEnCarrito)
@@ -55,7 +70,8 @@ function mostrarCatalogo(array){
 
 let productosEnCarrito = JSON.parse(localStorage.getItem('carrito')) || []
 
-function agregarProducto(producto){
+// AGREGAR PRODUCTO EXISTENTE AL CARRITO
+function agregarAlCarrito(producto){
     producto.cantidad = 1
     producto.subtotal = producto.precio
     productosEnCarrito.push(producto)
@@ -69,6 +85,8 @@ function agregarProducto(producto){
 
 }
 
+
+//Quitar del carrito
 const quitarDelCarrito = (id) => {
     for (let i = 0; i < productosEnCarrito.length; i++) {
         if (productosEnCarrito[i].id === id) {
@@ -81,9 +99,12 @@ const quitarDelCarrito = (id) => {
         }
     }
     actualizarPrecioTotal(productosEnCarrito)
+    mostrarCatalogo(gondola)
+    document.getElementById(`agregarBtn${id}`).style.display = 'inline'
+    document.getElementById(`btnMasMenos${id}`).style.display = 'none'
+    
+
 }
-
-
 
 
 const actualizarPrecioTotal = (productosEnCarrito) => {
@@ -95,8 +116,7 @@ const actualizarPrecioTotal = (productosEnCarrito) => {
     element.innerHTML = `Precio total:  <span class="badge bg-success">$${precioTotal}</span>`
 }
 
-
-
+//Cargar producto nuevo
 function cargarProducto(array){
     
     let inputMarca = document.getElementById("marcaInput")
@@ -126,6 +146,7 @@ function cargarProducto(array){
     inputImagen.value = ""
 }
 
+//Buscador
 function buscarInfo(buscado, array){
     let busquedaArray = array.filter(
         (producto) => producto.marca.toLowerCase().includes(buscado.toLowerCase()) || producto.bebida.toLowerCase().includes(buscado.toLowerCase())
@@ -140,8 +161,8 @@ function buscarInfo(buscado, array){
 
     }
 }
-//Ordenar productos
 
+//Ordenar productos
 function ordenarMenorMayor(array){
     const menorMayor = [].concat(array)
     menorMayor.sort((a,b) => a.precio - b.precio)
@@ -171,11 +192,12 @@ function ordenarAlfabeticamenteBebida(array){
         mostrarCatalogo(ordenadoAlfabeticamente)
 }
 
-//Eventos
+
 guardarProductoBtn.addEventListener("click", ()=>{
     cargarProducto(gondola)
 })
 
+//Catalogo y compra
 verCatalogoBtn.onclick = () => {
     mostrarCatalogo(gondola)
     Toastify({
@@ -211,6 +233,8 @@ buscador.addEventListener("input", ()=>{
     buscarInfo(buscador.value, gondola)
 }) 
 
+
+
 VaciarCarritoBtn.onclick = () => {
     if (productosEnCarrito.length === 0) {
         Swal.fire({
@@ -224,7 +248,10 @@ VaciarCarritoBtn.onclick = () => {
     document.getElementById('modal-bodyCarrito').innerHTML = ''
     localStorage.clear()
     productosEnCarrito = []
-    actualizarPrecioTotal(productosEnCarrito)    
+    actualizarPrecioTotal(productosEnCarrito)  
+    mostrarCatalogo(gondola)
+    document.getElementById(`agregarBtn${id}`).style.display = 'inline'
+    document.getElementById(`btnMasMenos${id}`).style.display = 'none'
 }
 
 selectOrden.addEventListener("change", ()=>{

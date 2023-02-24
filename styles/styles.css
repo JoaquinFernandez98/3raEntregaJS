@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+/*Modo Oscuro */
+#containerModo{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
 .darkMode{
     color: white;
     background-color: black;
@@ -14,6 +22,7 @@
 .darkMode .modal{
     color: black;
 }
+
 /*Card*/
  .card{
     width: 90%;
@@ -81,13 +90,6 @@
     justify-content: center;
     color: indigo;
 
-}
-
-#containerModo{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 15px;
-    margin-right: 10px;
 }
 
 /*Foto principal*/

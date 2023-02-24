@@ -1,0 +1,55 @@
+[
+    {
+        "id": 1,
+        "bebida": "Agua",
+        "marca": "Villavicencio",
+        "precio": 200,
+        "imagen": "",
+        "cantidad": 0,
+        "subtotal": 0
+    },
+    {
+        "id": 2,
+        "bebida": "Bebida cola",
+        "marca": "Coca-Cola",
+        "precio": 450,
+        "imagen": "",
+        "cantidad": 0
+    },
+    {
+        "id": 3,
+        "bebida": "Cerveza",
+        "marca": "Heineken",
+        "precio": 600,
+        "imagen": "",
+        "cantidad": 0,
+        "subtotal": 0
+    },
+    {
+        "id": 4,
+        "bebida": "Fernet",
+        "marca": "Branca",
+        "precio": 8000,
+        "imagen": "",
+        "cantidad": 0,
+        "subtotal": 0
+    },
+    {
+        "id": 5,
+        "bebida": "Whisky",
+        "marca": "Jack Daniels",
+        "precio": 15000,
+        "imagen": "",
+        "cantidad": 0,
+        "subtotal": 0
+    },
+    {
+        "id": 6,
+        "bebida": "Vino",
+        "marca": "Trumpeter",
+        "precio": 11000,
+        "imagen": "",
+        "cantidad": 0,
+        "subtotal": 0
+    }
+]
